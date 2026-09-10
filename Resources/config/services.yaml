@@ -1,0 +1,23 @@
+services:
+    # Services whose dependencies are all guaranteed go here, wired explicitly.
+    #
+    # ⚠️ No autowiring and no autoconfiguration. A bundle that autowires depends on the
+    # application's container behaving like the application's own code, and a consumer that turns
+    # `autoconfigure` off for `vendor/` — which it should — would silently lose whatever a tag was
+    # doing. Explicit is also the only way `debug:container` tells the truth.
+    _defaults:
+        autowire: false
+        autoconfigure: false
+        public: false
+
+    Jul6Art\PdfBundle\Renderer\DompdfRenderer: ~
+    Jul6Art\PdfBundle\Renderer\HtmlToPdfRendererInterface: '@Jul6Art\PdfBundle\Renderer\DompdfRenderer'
+
+    Jul6Art\PdfBundle\Archive\Sha256PdfArchiver: ~
+    Jul6Art\PdfBundle\Archive\PdfArchiverInterface: '@Jul6Art\PdfBundle\Archive\Sha256PdfArchiver'
+
+    Jul6Art\PdfBundle\Template\TemplateWhitelistResolver: ~
+
+    Jul6Art\PdfBundle\Locale\LocaleSwitcher:
+        arguments:
+            $translator: '@translator'
