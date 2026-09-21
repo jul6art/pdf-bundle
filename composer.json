@@ -73,11 +73,7 @@
             "@rector-check",
             "@phpstan",
             "@test"
-        ],
-        "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
-        }
+        ]
     },
     "suggest": {
         "symfony/twig-bundle": "Registers PdfAssetExtension's Twig functions (pdf_image_path, pdf_image_data_uri). Without it, the extension is simply not registered — a project without Twig has nothing to render a PDF template with anyway."
