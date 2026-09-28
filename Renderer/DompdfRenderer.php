@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jul6Art\PdfBundle\Renderer;
 
+use Dompdf\Adapter\CPDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -36,6 +37,26 @@ final class DompdfRenderer implements HtmlToPdfRendererInterface
         $dompdf->setPaper($options->paperSize, $options->orientation);
         $dompdf->render();
 
+        if (null !== $options->reproducibleSeed) {
+            self::makeReproducible($dompdf, $options->reproducibleSeed);
+        }
+
         return PdfOutputGuard::assertNotEmpty($dompdf->output());
+    }
+
+    /**
+     * Dompdf stamps each document with the clock (`CreationDate`, `ModDate`) and an identifier
+     * drawn from `microtime()` and `mt_rand()`. Both are replaced by values derived from the seed —
+     * nothing else in the output depends on time or chance.
+     */
+    private static function makeReproducible(Dompdf $dompdf, string $seed): void
+    {
+        $dompdf->addInfo('CreationDate', "D:20000101000000+00'00'");
+        $dompdf->addInfo('ModDate', "D:20000101000000+00'00'");
+
+        $canvas = $dompdf->getCanvas();
+        if ($canvas instanceof CPDF) {
+            $canvas->get_cpdf()->fileIdentifier = md5('jul6art/pdf-bundle:'.$seed);
+        }
     }
 }

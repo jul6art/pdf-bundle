@@ -17,6 +17,13 @@ final class PdfRenderOptions
         public readonly string $paperSize = 'A4',
         public readonly string $orientation = 'portrait',
         public readonly string $defaultFont = 'DejaVu Sans',
+        /**
+         * When set, the same HTML rendered with the same seed gives the SAME bytes: the document
+         * identifier and dates are derived from it instead of the clock and a random number. For a
+         * consumer that checksums a generated file and must regenerate it identically. Null (the
+         * default) keeps every render a distinct document.
+         */
+        public readonly ?string $reproducibleSeed = null,
     ) {
     }
 

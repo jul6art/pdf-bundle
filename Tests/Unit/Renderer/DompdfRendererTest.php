@@ -44,4 +44,33 @@ final class DompdfRendererTest extends TestCase
         self::assertLessThan(2.0, microtime(true) - $start, 'A remote image must never be fetched.');
         self::assertStringStartsWith('%PDF-', $pdf);
     }
+
+    /**
+     * A reproducible render gives the SAME bytes for the same HTML and seed — what lets a consumer
+     * checksum a generated file and regenerate it identically later (cegeta ADR-0032).
+     */
+    public function testAReproducibleRenderGivesTheSameBytesForTheSameSeed(): void
+    {
+        $renderer = new DompdfRenderer();
+        $options = new PdfRenderOptions(reproducibleSeed: 'job-0f3a');
+
+        $first = $renderer->render('<p>Sheet</p>', $options);
+        usleep(1_100_000);
+        $second = $renderer->render('<p>Sheet</p>', $options);
+
+        self::assertSame(hash('sha256', $first), hash('sha256', $second));
+        self::assertNotSame(
+            hash('sha256', $first),
+            hash('sha256', $renderer->render('<p>Sheet</p>', new PdfRenderOptions(reproducibleSeed: 'job-other'))),
+            'Another seed gives another document identifier.',
+        );
+    }
+
+    /** Without a seed, nothing changes: every render is a distinct document, as before. */
+    public function testWithoutASeedEachRenderIsADistinctDocument(): void
+    {
+        $renderer = new DompdfRenderer();
+
+        self::assertNotSame(hash('sha256', $renderer->render('<p>Sheet</p>')), hash('sha256', $renderer->render('<p>Sheet</p>')));
+    }
 }

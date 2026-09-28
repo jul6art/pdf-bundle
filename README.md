@@ -81,6 +81,20 @@ chain against a worker fetching an attacker-controlled URL while rasterising a d
 need to fetch remote assets means writing your own `HtmlToPdfRendererInterface` implementation,
 which makes that choice an explicit, reviewable line instead of a flipped default.
 
+### Rendering reproducibly (same bytes, same checksum)
+
+Dompdf stamps every document with the clock and a random identifier, so rendering the same HTML twice
+gives two different files. Pass a `reproducibleSeed` when a file is checksummed and must be regenerated
+identically later — a print sheet re-downloaded months after, an archived export compared byte for byte:
+
+```php
+$pdf = $this->renderer->render($html, new PdfRenderOptions(reproducibleSeed: $job->getUuid()->toRfc4122()));
+```
+
+The same HTML and seed give the same bytes; another seed gives another document identifier. Without a
+seed nothing changes. The seed only replaces the dates and the identifier — HTML that itself prints the
+current time is still not reproducible.
+
 ### Archiving with an integrity hash
 
 `PdfArchiverInterface` is the hash/store/verify triplet a PDF generator almost always needs once it
