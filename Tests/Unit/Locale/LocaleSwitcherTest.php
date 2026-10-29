@@ -76,7 +76,7 @@ final class LocaleSwitcherTest extends TestCase
         $switcher = new LocaleSwitcher($translator);
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('boom');
+        $this->expectExceptionMessageIsOrContains('boom');
 
         try {
             $switcher->withLocale('en', static function (): never {
