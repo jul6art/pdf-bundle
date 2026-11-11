@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jul6Art\PdfBundle\Template;
 
 /**
- * Generalises the pattern found in `superp`'s `ErpPdfTemplateResolver`: a
+ * Generalises the pattern found in superp: a
  * requested template code that is not on the whitelist falls back to a
  * known-good default, silently — a hostile or stale tenant setting can
  * never steer the renderer onto an arbitrary path.

@@ -6,8 +6,7 @@ namespace Jul6Art\PdfBundle\Archive;
 
 /**
  * The hash/store/verify triplet found duplicated five times across
- * `superp`'s PDF generators (Invoice, Quote, PurchaseOrder, Payslip,
- * HrDocument), always identical.
+ * the PDF generators of superp, always identical.
  */
 final class Sha256PdfArchiver implements PdfArchiverInterface
 {

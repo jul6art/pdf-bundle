@@ -47,7 +47,7 @@ final class DompdfRendererTest extends TestCase
 
     /**
      * A reproducible render gives the SAME bytes for the same HTML and seed — what lets a consumer
-     * checksum a generated file and regenerate it identically later (cegeta ADR-0032).
+     * checksum a generated file and regenerate it identically later (cegeta).
      */
     public function testAReproducibleRenderGivesTheSameBytesForTheSameSeed(): void
     {

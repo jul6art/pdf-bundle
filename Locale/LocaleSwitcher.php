@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * regardless of the current request's locale — and restores it afterwards
  * even if the callback throws.
  *
- * Already 100% generic in its original form (`superp`'s `PdfLocaleSwitcher`):
+ * Already 100% generic in its original form (in superp):
  * its only dependency is `TranslatorInterface`, nothing PDF-specific about
  * it. It lives in this bundle because rendering a PDF is its only consumer
  * today, not because the mechanism belongs here architecturally.

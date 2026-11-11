@@ -11,8 +11,8 @@ namespace Jul6Art\PdfBundle\Renderer;
  * behind a valid SHA-256 hash of the empty string.
  *
  * Two independent consumers hit this gap the same way before this bundle
- * existed: one guarded it (`cereezer`'s `ReportGenerationException`, ADR-0011),
- * the other never did (`superp`'s seven PDF generators, D-1).
+ * existed: one guarded it (cereezer),
+ * the other never did (superp).
  */
 final class PdfRenderException extends \RuntimeException
 {
