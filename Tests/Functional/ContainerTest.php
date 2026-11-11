@@ -58,7 +58,7 @@ final class ContainerTest extends AbstractFunctionalTestCase
     }
 
     /**
-     * D-3 (`docs/analyse/pdf_bundle.md` § 6): configured in three projects, called in one. Proving
+     * Configured in three projects, called in one. Proving
      * the extension actually registers when Twig is present is the only way this bundle's own test
      * suite can rule out repeating that gap.
      */
