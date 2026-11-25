@@ -10,7 +10,10 @@ HTML to PDF rendering for Symfony
     <img src="https://img.shields.io/static/v1?label=stable&message=v1.2.0&color=0ea5e9" alt="Version">
 </p>
 
-HTML to PDF rendering for Symfony
+Renders HTML to PDF with Dompdf, behind a renderer service you inject: real PDF bytes or a
+`PdfRenderException`, never an empty string, and remote fetching locked off. It also covers what a
+document that gets archived needs: reproducible output, an integrity hash, templates picked from a
+whitelist, and rendering in the recipient's locale.
 
 Requirements
 ------------
